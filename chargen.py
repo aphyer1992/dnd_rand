@@ -5,8 +5,6 @@ from weighted_choice import WeightedChoice
 
 global_stats = ["STR", "DEX", "CON", "INT", "WIS", "CHA"]
 
-
-
 bonus_selector = WeightedChoice([
     lambda x: "Domain Blessing: you gain the domain power of the " + random.choice(domains) + " domain and may cast its spells up to half your level once per day each.",
     lambda x: random.choice(energy_types) + " resistance: gain resistance 5, increasing by 5 each 5 levels.",
@@ -26,7 +24,7 @@ penalty_selector = WeightedChoice([
     'Frail: you take a -3 penalty on Fortitude saves',
     'Stumble: you take a -3 penalty on Reflex saves',
     'Weak Willed: you take a -3 penalty on Will saves',
-    lambda x: random.choice(creature_types) + ' Phobia: creatures of that type have Fearful Presence against you.' 
+    lambda: random.choice(creature_types) + ' Phobia: creatures of that type have Fearful Presence against you.'
 ])
 
 def roll_die(n):
