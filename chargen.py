@@ -6,19 +6,19 @@ from weighted_choice import WeightedChoice
 global_stats = ["STR", "DEX", "CON", "INT", "WIS", "CHA"]
 
 bonus_selector = WeightedChoice([
-    lambda x: "Domain Blessing: you gain the domain power of the " + random.choice(domains) + " domain and may cast its spells up to half your level once per day each.",
-    lambda x: random.choice(energy_types) + " resistance: gain resistance 5, increasing by 5 each 5 levels.",
-    lambda x: random.choice(creature_types) + " Hunter: you gain a +2 favored enemy bonus against that creature type, increasing by 1 each 5 levels."
+    lambda: "Domain Blessing: you gain the domain power of the " + random.choice(domains) + " domain and may cast its spells up to half your level once per day each.",
+    lambda: random.choice(energy_types) + " resistance: gain resistance 5, increasing by 5 each 5 levels.",
+    lambda: random.choice(creature_types) + " Hunter: you gain a +2 favored enemy bonus against that creature type, increasing by 1 each 5 levels."
     'Great Fortitude: you gain a +2 bonus on Fortitude saves.',
     'Lightning Reflexes: you gain a +2 bonus on Reflex saves.',
     'Iron Will: you gain a +2 bonus on Will saves.',
     'Fury: gain 1/day Rage (as the barbarian ability).',
-    lambda x: 'Skinchanger: 1/day Wild Shape (as the druid ability), only into a ' + random.choice(animal_companions) + '.',
+    lambda: 'Skinchanger: 1/day Wild Shape (as the druid ability), only into a ' + random.choice(animal_companions) + '.',
     'Devourer: once per day per level, you may use Death Knell (as the cleric spell).'
 ])
 
 penalty_selector = WeightedChoice([
-    lambda x: random.choice(energy_types) + " vulnerability: take double damage from that energy type.",
+    lambda: random.choice(energy_types) + " vulnerability: take double damage from that energy type.",
     'Maimed: you have only one hand',
     'Lame: you have a permanent limp, reducing your speed by 10 feet',
     'Frail: you take a -3 penalty on Fortitude saves',
@@ -123,6 +123,6 @@ def gen_character():
     print("\nFinal Character:")
     print_character(character)
 
-random.seed('Sanctuary')
+random.seed('Sean_test')
 for i in range(4):
     gen_character()
