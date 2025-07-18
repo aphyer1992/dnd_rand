@@ -8,7 +8,7 @@ global_stats = ["STR", "DEX", "CON", "INT", "WIS", "CHA"]
 bonus_selector = WeightedChoice([
     lambda: "Domain Blessing: you gain the domain power of the " + random.choice(domains) + " domain and may cast its spells up to half your level once per day each.",
     lambda: random.choice(energy_types) + " resistance: gain resistance 5, increasing by 5 each 5 levels.",
-    lambda: random.choice(creature_types) + " Hunter: you gain a +2 favored enemy bonus against that creature type, increasing by 1 each 5 levels."
+    lambda: random.choice(creature_types) + " Hunter: you gain a +2 favored enemy bonus against that creature type, increasing by 1 each 5 levels.",
     'Great Fortitude: you gain a +2 bonus on Fortitude saves.',
     'Lightning Reflexes: you gain a +2 bonus on Reflex saves.',
     'Iron Will: you gain a +2 bonus on Will saves.',
