@@ -24,7 +24,8 @@ class_selector = WeightedChoice([
     "Rogue",
     "Sorcerer",
     "Wizard",
-    lambda: random.choice(rare_class_list)
+    #lambda race: get_preferred_class(race), once I have those implemented
+    lambda _: random.choice(rare_class_list)
 ])
 
 
@@ -56,7 +57,7 @@ race_selector = WeightedChoice([
     "Halfling",
     "Half-Elf",
     "Half-Orc",
-    lambda: rare_race_selector.choose()
+    lambda _: rare_race_selector.choose()
 ])
 
 race_selector.set_weight("Human", 4)
@@ -132,3 +133,21 @@ animal_companions = [
 ]
 
 energy_types = ['Acid', 'Cold', 'Electricity', 'Fire']
+
+weapons = [
+    ['Dagger', 'Light', 'Simple', 'PS', 1],
+    ['Light Mace', 'Light', 'Simple', 'B', 1],
+    ['Sickle', 'Light', 'Simple', 'S', 0.2],
+    ['Club', 'One-Handed', 'Simple', 'B', 0.2],
+    ['Heavy Mace', 'One-Handed', 'Simple', 'B', 1],
+    ['Morningstar', 'One-Handed', 'Simple', 'BP', 1],
+    ['Shortspear', 'One-Handed', 'Simple', 'P', 1],
+    ['Spear', 'Two-Handed', 'Simple', 'P', 1],
+    ['Longspear', 'Two-Handed', 'Simple', 'P', 1],
+    ['Quarterstaff', 'Two-Handed', 'Simple', 'B', 1],
+    ['Heavy Crossbow', 'Ranged', 'Simple', 'P', 1],
+    ['Light Crossbow', 'Ranged', 'Simple', 'P', 1],
+    ['Darts', 'Thrown', 'Simple', 'P', 0.2],
+    ['Javelins', 'Thrown', 'Simple', 'P', 1],
+    ['Sling', 'Ranged', 'Simple', 'B', 0.5],
+]

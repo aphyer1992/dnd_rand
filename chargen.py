@@ -6,25 +6,28 @@ from weighted_choice import WeightedChoice
 global_stats = ["STR", "DEX", "CON", "INT", "WIS", "CHA"]
 
 bonus_selector = WeightedChoice([
-    lambda: "Domain Blessing: you gain the domain power of the " + random.choice(domains) + " domain and may cast its spells up to half your level once per day each.",
-    lambda: random.choice(energy_types) + " resistance: gain resistance 5, increasing by 5 each 5 levels.",
-    lambda: random.choice(creature_types) + " Hunter: you gain a +2 favored enemy bonus against that creature type, increasing by 1 each 5 levels.",
+    lambda _: "Domain Blessing: you gain the domain power of the " + random.choice(domains) + " domain and may cast its spells up to half your level once per day each.",
+    lambda _: random.choice(energy_types) + " resistance: gain resistance 5, increasing by 5 each 5 levels.",
+    lambda _: random.choice(creature_types) + " Hunter: you gain a +2 favored enemy bonus against that creature type, increasing by 1 each 5 levels.",
     'Great Fortitude: you gain a +2 bonus on Fortitude saves.',
     'Lightning Reflexes: you gain a +2 bonus on Reflex saves.',
     'Iron Will: you gain a +2 bonus on Will saves.',
     'Fury: gain 1/day Rage (as the barbarian ability).',
-    lambda: 'Skinchanger: 1/day Wild Shape (as the druid ability), only into a ' + random.choice(animal_companions) + '.',
-    'Devourer: once per day per level, you may use Death Knell (as the cleric spell).'
+    lambda _: 'Skinchanger: 1/day Wild Shape (as the druid ability), only into a ' + random.choice(animal_companions) + '.',
+    'Devourer: once per day per level, you may use Death Knell (as the cleric spell).',
+    lambda _x: random.choice(['Divination', 'Enchantment', 'Evocation', 'Illusion', 'Necromancy']) + ' Immunity: you have automatic unbeatable SR against the listed school.  (This cannot be lowered voluntarily).',
 ])
 
 penalty_selector = WeightedChoice([
-    lambda: random.choice(energy_types) + " vulnerability: take double damage from that energy type.",
+    lambda _: random.choice(energy_types) + " vulnerability: take double damage from that energy type.",
     'Maimed: you have only one hand',
     'Lame: you have a permanent limp, reducing your speed by 10 feet',
     'Frail: you take a -3 penalty on Fortitude saves',
     'Stumble: you take a -3 penalty on Reflex saves',
     'Weak Willed: you take a -3 penalty on Will saves',
-    lambda: random.choice(creature_types) + ' Phobia: creatures of that type have Fearful Presence against you.'
+    lambda _: random.choice(creature_types) + ' Phobia: creatures of that type have Fearful Presence against you.',
+    lambda _: random.choice(['Abjuration', 'Conjuration', 'Transmutation']) + ' Immunity: you have automatic unbeatable SR against the listed school.  (This cannot be lowered voluntarily).',
+    lambda char: None if char['char_class'] != 'Wizard' else 'Extra Blocked School: ' + random.choice([c for c in magic_schools if c not in char['requirement']])
 ])
 
 def roll_die(n):
@@ -124,6 +127,6 @@ def gen_character():
     print("\nFinal Character:")
     print_character(character)
 
-random.seed('Sean_test')
+random.seed('Sean_test_2')
 for i in range(4):
     gen_character()
