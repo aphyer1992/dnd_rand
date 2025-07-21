@@ -3,8 +3,6 @@ from typing import Union, Callable, Any
 from config_lists import *
 from weighted_choice import WeightedChoice  
 
-global_stats = ["STR", "DEX", "CON", "INT", "WIS", "CHA"]
-
 bonus_selector = WeightedChoice([
     lambda _: "Domain Blessing: you gain the domain power of the " + random.choice(domains) + " domain and may cast its spells up to half your level once per day each.",
     lambda _: random.choice(energy_types) + " resistance: gain resistance 5, increasing by 5 each 5 levels.",
@@ -38,14 +36,18 @@ def roll_stat():
     return sum(rolls) - min(rolls)
 
 def print_character(character):
-    print(f"""{character['race']} {character['char_class']}\nStats (before racial bonuses):""")
+    print(f"""{character['race']} {character['char_class']}\nStats:""")
     for stat in global_stats:
-        print(f"{stat}: {character['stats'][stat]}")
-    if len(character['requirement']):
+        race_effect = race_stats[character['race']][stat]
+        if race_effect == 0:
+            print(f"{stat}: {character['stats'][stat]}")
+        else:
+            print(f"{stat}: {character['stats'][stat]} {'+' if race_effect > 0 else '-'} {abs(race_effect)} = {character['stats'][stat] + race_effect}")
+    if 'requirement' in character and len(character['requirement']):
         print(f"Class-specific requirement: {character['requirement']}")
-    if 'bonus' in character:
+    if 'bonus' in character and len(character['bonus']):
         print(f"Bonus: {character['bonus']}")
-    if 'penalty' in character:
+    if 'penalty' in character and len(character['penalty']):
         print(f"Penalty: {character['penalty']}")
     print()
 
@@ -82,14 +84,28 @@ def gen_character_requirement(character):
 def gen_character():
     character = {
         'stats': {stat: roll_stat() for stat in global_stats},
-        'char_class': class_selector.choose(),
         'race': race_selector.choose()
     }
-
+    character['char_class'] = class_selector.choose(character['race'])
+    random_bonus = 1
+    if character['char_class'] == 'Any':
+        print_character(character)
+        print("Your race can choose any class as their preferred class: type your preferred class to select it.  (You can choose a non-base class, but this will incur penalties later...)")
+        while character['char_class'] == 'Any':
+            preferred_class = input("Preferred class: ").strip()
+            if preferred_class in base_class_list:
+                character['char_class'] = preferred_class
+            elif preferred_class in rare_class_list:
+                character['char_class'] = preferred_class
+                random_bonus -= 1
+            else:
+                print(f"Invalid class {preferred_class}. Try one of these: {', '.join(base_class_list)}")
     character['requirement'] = gen_character_requirement(character)
     done = False
 
-    random_bonus = 2 if len(character['requirement']) else 1
+    if len(character['requirement']):
+        random_bonus += 1
+
     while not done:
         print_character(character)
         print("To swap two stats, type 'swap <stat1> <stat2>'.")
@@ -127,6 +143,6 @@ def gen_character():
     print("\nFinal Character:")
     print_character(character)
 
-random.seed('Sean_test_2')
-for i in range(4):
+random.seed('Sanctuary')
+for i in range(10):
     gen_character()

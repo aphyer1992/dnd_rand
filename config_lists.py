@@ -1,5 +1,6 @@
 from weighted_choice import WeightedChoice
 import random
+global_stats = ["STR", "DEX", "CON", "INT", "WIS", "CHA"]
 rare_class_list = [
     "Psion", "Psychic Warrior", "Soulknife", "Wilder",
     "Ninja", "Scout", "Spellthief",
@@ -11,8 +12,7 @@ rare_class_list = [
     "Beguiler", "Dragon Shaman", "Duskblade", "Knight",
     "Binder", "Shadowcaster"
 ]
-
-class_selector = WeightedChoice([
+base_class_list = [
     "Barbarian",
     "Bard",
     "Cleric",
@@ -24,10 +24,11 @@ class_selector = WeightedChoice([
     "Rogue",
     "Sorcerer",
     "Wizard",
-    #lambda race: get_preferred_class(race), once I have those implemented
+]
+class_selector = WeightedChoice(base_class_list + [
+    lambda race: race_stats[race]['favored_class'],
     lambda _: random.choice(rare_class_list)
 ])
-
 
 rare_race_selector = WeightedChoice([
     "Aasimar",
@@ -211,3 +212,38 @@ special_weapon_materials = [
     'Cold Iron',
     'Silver',
 ]
+
+race_stats = {
+    'Human' : {'favored_class' : 'Any'},
+    'Dwarf' : {'favored_class' : 'Fighter', 'CON': 2, 'CHA': -2},
+    'Elf' : {'favored_class' : 'Wizard', 'DEX': 2, 'CON': -2},
+    'Gnome' : {'favored_class' : 'Bard', 'CON': 2, 'STR': -2},
+    'Halfling' : {'favored_class' : 'Rogue', 'DEX': 2, 'STR': -2},
+    'Half-Elf' : {'favored_class' : 'Any'},
+    'Half-Orc' : {'favored_class' : 'Barbarian', 'STR': 2, 'INT': -2, 'CHA': -2},
+    "Aasimar": {'favored_class': 'Paladin', 'CHA': 2, 'WIS': 2},
+    "Tiefling": {'favored_class': 'Rogue', 'CHA': -2, 'INT': 2, 'DEX' : 2},
+    "Air Genasi": {'favored_class': 'Fighter', 'DEX': 2, 'INT': 2, 'WIS' : -2, 'CHA': -2},
+    "Earth Genasi": {'favored_class': 'Fighter', 'CON': 2, 'STR': 2, 'WIS': -2, 'CHA': -2},
+    "Fire Genasi": {'favored_class': 'Fighter', 'CHA': -2, 'INT': 2},
+    "Water Genasi": {'favored_class': 'Cleric', 'CON': 2, 'CHA': -2},
+    "Dromite": {'favored_class': 'Wilder', 'CHA': 2, 'STR' : -2, 'WIS': -2},
+    "Goliath": {'favored_class': 'Barbarian', 'STR': 2, 'DEX': -2},
+    "Elan": {'favored_class': 'Psion', 'CHA': -2},
+    "Half-Giant": {'favored_class': 'Psychic Warrior', 'STR': 2, 'CON' : 2, 'DEX': -2},
+    "Maenad": {'favored_class': 'Wilder'},
+    "Wood Elf": {'favored_class': 'Ranger', 'DEX': 2, 'CON': -2, 'STR' : 2, 'INT' : -2},
+    "Gray Elf": {'favored_class': 'Wizard', 'INT': 2, 'STR': -2, 'CON': -2, 'DEX': 2},
+    "Duergar": {'favored_class': 'Fighter', 'CON': 2, 'CHA': -4},
+    "Goblin": {'favored_class': 'Rogue', 'DEX': 2, 'STR': -2, 'CHA' : -2},
+    "Hobgoblin": {'favored_class': 'Fighter', 'CON': 2, 'DEX': 2},
+    "Kobold": {'favored_class': 'Sorceror', 'CON' : -2, 'DEX': 2, 'STR': -4},
+    "Gnoll": {'favored_class': 'Ranger', 'STR': 4, 'CON' : 2, 'CHA' : -2, 'INT': -2},
+    "Lizardfolk": {'favored_class': 'Druid', 'STR' : 2, 'CON': 2, 'INT': -2},
+    "Orc": {'favored_class': 'Barbarian', 'STR': 4, 'INT': -2, 'WIS' : -2, 'CHA': -2},
+}
+
+for race, stats in race_stats.items():
+    for stat in global_stats:
+        if stat not in stats:
+            stats[stat] = 0
