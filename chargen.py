@@ -69,6 +69,9 @@ def random_favored_enemy():
 def random_animal_companion():
     return(f"Animal companion: {random.choice(animal_companions)}")
 
+def random_totem_dragon():
+    return(f"Totem dragon: {random.choice(dragon_types)}")
+
 def gen_character_requirement(character):
     if character['char_class'] == 'Wizard':
         return random_wizard_schools()
@@ -78,6 +81,8 @@ def gen_character_requirement(character):
         return random_favored_enemy()
     elif character['char_class'] == 'Druid':
         return random_animal_companion()
+    elif character['char_class'] == 'Dragon Shaman':
+        return random_totem_dragon()
     else:
         return ''
 
@@ -143,6 +148,6 @@ def gen_character():
     print("\nFinal Character:")
     print_character(character)
 
-random.seed('Sanctuary')
+random.seed('SeanTest')
 for i in range(10):
     gen_character()

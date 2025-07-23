@@ -130,9 +130,12 @@ creature_types = [
 
 animal_companions = [ 
     "badger", "camel", "dire rat", "dog", "riding dog", "eagle", "hawk", 
-    "light horse", "heavy horse", "owl", "pony", "Small viper", "Medium viper", "wolf"
+    "light horse", "heavy horse", "owl", "pony", "small viper", ",edium viper", "wolf"
 ]
 
+dragon_types = [ 
+    "Black", "Blue", "Brass", "Bronze", "Copper", "Gold", "Green", "Red", "Silver", "White"
+]
 energy_types = ['Acid', 'Cold', 'Electricity', 'Fire']
 
 weapons_raw = [
