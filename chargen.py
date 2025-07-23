@@ -44,7 +44,7 @@ def print_character(character):
         print(f"Bonus: {character['bonus']}")
     if 'penalty' in character:
         print(f"Penalty: {character['penalty']}")
-    print("/n")
+    print("\n")
 
 def random_wizard_schools():
     focus = random.choice(magic_schools + ['Universalist'])
