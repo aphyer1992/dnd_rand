@@ -22,10 +22,10 @@ class WeightedChoice:
         if any(w < 0 for w in self.weights):
             raise ValueError("Weights must be non-negative")
     
-    def choose(self):
+    def choose(self, params=None):
         """Select random item with weights, calling if it's a function."""
         result = random.choices(self.items, weights=self.weights, k=1)[0]
-        return result() if callable(result) else result
+        return result(params) if callable(result) else result
     
     def add_item(self, item, weight=1):
         """Add a new item with optional weight."""
